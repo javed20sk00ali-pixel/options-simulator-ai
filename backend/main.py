@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 # Load mock option chain
-with open("backend/data/option_chain.json") as f:
+with open("data/option_chain.json") as f:
     OPTION_CHAIN = json.load(f)
 
 class Leg(BaseModel):
