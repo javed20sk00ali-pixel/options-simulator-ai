@@ -1,16 +1,14 @@
+# main.py — Final Fixed Version ✅
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import json
 import math
+import os
 
 app = FastAPI()
-
-@app.get("/")
-def root():
-    return {"message": "Options Strategy Backend is Running ✅"}
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,7 +18,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load mock option chain
+# ✅ Root route for Railway health check
+@app.get("/")
+def root():
+    return {"message": "Options Strategy Backend is Running ✅"}
+
+# ✅ Load mock option chain (correct path for Railway container)
 with open("data/option_chain.json") as f:
     OPTION_CHAIN = json.load(f)
 
@@ -81,11 +84,10 @@ def ai_adjust_strategy(request: StrategyRequest):
             adjustment.append(f"Consider buying higher strike Call to cap risk on {leg.strike_price}C")
     return {"suggestions": adjustment}
 
-
+# ✅ Ensure app runs on Railway-assigned port
 if __name__ == "__main__":
-    import os
-    import uvicorn
-
     port = int(os.environ.get("PORT", 8000))
+    import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=port)
+
 
