@@ -7,6 +7,11 @@ import math
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"message": "Options Strategy Backend is Running ✅"}
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
