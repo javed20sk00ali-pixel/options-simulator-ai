@@ -75,3 +75,12 @@ def ai_adjust_strategy(request: StrategyRequest):
         elif leg.side == "sell" and leg.option_type == "call":
             adjustment.append(f"Consider buying higher strike Call to cap risk on {leg.strike_price}C")
     return {"suggestions": adjustment}
+
+
+if __name__ == "__main__":
+    import os
+    import uvicorn
+
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
+
